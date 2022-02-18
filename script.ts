@@ -22,19 +22,20 @@ const questions = [
         correct:"b"
     }
 ];
-
-
+const quiz = document.getElementById("quiz_container");
+const player_answers = document.querySelectorAll('input[name="answer"]');
 const element_question = document.getElementById("the_question");
 const question_label_a =  document.getElementById("label_a");
 const question_label_b = document.getElementById("label_b");
 const question_label_c = document.getElementById("label_c");
 const done_button = document.getElementById("done_button");
 let cur_quiz:number = 0;
-
+let cur_score:number = 0;
 
 load_quiz();
 
-function load_quiz(){
+function load_quiz()
+{
     const cur_quiz_data = questions[cur_quiz];
     element_question.innerText = cur_quiz_data.question;
     question_label_a.innerText = cur_quiz_data.a;
@@ -42,7 +43,33 @@ function load_quiz(){
     question_label_c.innerText = cur_quiz_data.c;
 }
 
-done_button.addEventListener("click", () => {
+function getCurrentPlayerAnswer()
+{
+    player_answers.forEach((answer) => {
+        if((answer as HTMLInputElement).checked)
+        {
+            if((answer as HTMLInputElement).id === questions[cur_quiz].correct)
+            {
+                cur_score++;
+            }
+            (answer as HTMLInputElement).checked = false;
+        }
+    });
+}
+
+
+
+done_button.addEventListener("click", () => 
+{
+    getCurrentPlayerAnswer();
     cur_quiz++;
-    load_quiz();
+    if(cur_quiz < questions.length)
+    {
+        load_quiz();
+    }
+    else
+    {
+        quiz.innerHTML = `<div>You got ${cur_score} out of ${questions.length} </div>`;
+    }
+    
 });

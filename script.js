@@ -21,12 +21,15 @@ var questions = [
         correct: "b"
     }
 ];
+var quiz = document.getElementById("quiz_container");
+var player_answers = document.querySelectorAll('input[name="answer"]');
 var element_question = document.getElementById("the_question");
 var question_label_a = document.getElementById("label_a");
 var question_label_b = document.getElementById("label_b");
 var question_label_c = document.getElementById("label_c");
 var done_button = document.getElementById("done_button");
 var cur_quiz = 0;
+var cur_score = 0;
 load_quiz();
 function load_quiz() {
     var cur_quiz_data = questions[cur_quiz];
@@ -35,7 +38,23 @@ function load_quiz() {
     question_label_b.innerText = cur_quiz_data.b;
     question_label_c.innerText = cur_quiz_data.c;
 }
+function getCurrentPlayerAnswer() {
+    player_answers.forEach(function (answer) {
+        if (answer.checked) {
+            if (answer.id === questions[cur_quiz].correct) {
+                cur_score++;
+            }
+            answer.checked = false;
+        }
+    });
+}
 done_button.addEventListener("click", function () {
+    getCurrentPlayerAnswer();
     cur_quiz++;
-    load_quiz();
+    if (cur_quiz < questions.length) {
+        load_quiz();
+    }
+    else {
+        quiz.innerHTML = "<div>You got ".concat(cur_score, " out of ").concat(questions.length, " </div>");
+    }
 });
