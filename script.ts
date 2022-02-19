@@ -43,7 +43,7 @@ function load_quiz()
     question_label_c.innerText = cur_quiz_data.c;
 }
 
-function getCurrentPlayerAnswer()
+function check_player_answer()
 {
     player_answers.forEach((answer) => {
         if((answer as HTMLInputElement).checked)
@@ -61,7 +61,7 @@ function getCurrentPlayerAnswer()
 
 done_button.addEventListener("click", () => 
 {
-    getCurrentPlayerAnswer();
+    check_player_answer();
     cur_quiz++;
     if(cur_quiz < questions.length)
     {
@@ -69,7 +69,7 @@ done_button.addEventListener("click", () =>
     }
     else
     {
-        quiz.innerHTML = `<div>You got ${cur_score} out of ${questions.length} </div>`;
+        quiz.innerHTML = `<div>You got ${cur_score} out of ${questions.length} </div><button onclick="location.reload()">Reload</button>`;
     }
     
 });

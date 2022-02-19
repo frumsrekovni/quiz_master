@@ -38,7 +38,7 @@ function load_quiz() {
     question_label_b.innerText = cur_quiz_data.b;
     question_label_c.innerText = cur_quiz_data.c;
 }
-function getCurrentPlayerAnswer() {
+function check_player_answer() {
     player_answers.forEach(function (answer) {
         if (answer.checked) {
             if (answer.id === questions[cur_quiz].correct) {
@@ -49,12 +49,12 @@ function getCurrentPlayerAnswer() {
     });
 }
 done_button.addEventListener("click", function () {
-    getCurrentPlayerAnswer();
+    check_player_answer();
     cur_quiz++;
     if (cur_quiz < questions.length) {
         load_quiz();
     }
     else {
-        quiz.innerHTML = "<div>You got ".concat(cur_score, " out of ").concat(questions.length, " </div>");
+        quiz.innerHTML = "<div>You got ".concat(cur_score, " out of ").concat(questions.length, " </div><button onclick=\"location.reload()\">Reload</button>");
     }
 });
